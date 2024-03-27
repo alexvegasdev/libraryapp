@@ -49,8 +49,6 @@ Route::controller(GenreController::class)->group(function () {
     Route::get('/genres', 'index')->name('genres.index');
     Route::post('/genres', 'store')->name('genres.store');
     Route::get('/genres/{id}', 'show')->name('genres.show');
-    Route::patch('/genres/{id}', 'update')->name('genres.update');
-    Route::delete('/genres/{id}', 'destroy')->name('genres.destroy');
 });
 
 Route::controller(RoleController::class)->group(function () {
@@ -70,7 +68,7 @@ Route::controller(CopyStatusController::class)->group(function () {
 });
 
 
-Route::controller(CopyStatusController::class)->group(function () {
+Route::controller(RecordController::class)->group(function () {
     Route::get('/records', 'index')->name('records.index');
     Route::post('/records', 'store')->name('records.store');
     Route::get('/records/{id}', 'show')->name('records.show');
@@ -79,7 +77,6 @@ Route::controller(CopyStatusController::class)->group(function () {
 });
 
 
-Route::post('/records/asociate', [RecordController::class, 'asociate']);
 
 
 
