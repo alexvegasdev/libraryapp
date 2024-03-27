@@ -28,27 +28,56 @@ Route::get('/', function () {
 });
 
 
-Route::get('/copies', [CopyController::class, 'index']);
-Route::post('/copies', [CopyController::class, 'store']);
-Route::get('/copies/{id}', [CopyController::class, 'show']);
-Route::patch('/copies/{id}', [CopyController::class, 'update']);
-Route::delete('/copies/{id}', [CopyController::class, 'destroy']);
-
-Route::get('/books', [BookController::class, 'index']);
-
-Route::post('/genres', [GenreController::class, 'store']);
-
-Route::post('/roles', [RoleController::class, 'store']);
-
-Route::get('/copystatuses', [CopyStatusController::class, 'index']);
-Route::post('/copystatuses', [CopyStatusController::class, 'store']);
-
-Route::get('/copies', [CopyController::class, 'index']);
+Route::controller(CopyController::class)->group(function () {
+    Route::get('/copies', 'index')->name('copies.index');
+    Route::post('/copies', 'store')->name('copies.store');
+    Route::get('/copies/{id}', 'show')->name('copies.show');
+    Route::patch('/copies/{id}', 'update')->name('copies.update');
+    Route::delete('/copies/{id}', 'destroy')->name('copies.destroy');
+});
 
 
-Route::get('/records', [RecordController::class, 'index']);
-Route::post('/records', [RecordController::class, 'store']);
-Route::delete('/records/{id}', [RecordController::class, 'destroy']);
+Route::controller(BookController::class)->group(function () {
+    Route::get('/books', 'index')->name('books.index');
+    Route::post('/books', 'store')->name('books.store');
+    Route::get('/books/{id}', 'show')->name('books.show');
+    Route::patch('/books/{id}', 'update')->name('books.update');
+    Route::delete('/books/{id}', 'destroy')->name('books.destroy');
+});
+
+Route::controller(GenreController::class)->group(function () {
+    Route::get('/genres', 'index')->name('genres.index');
+    Route::post('/genres', 'store')->name('genres.store');
+    Route::get('/genres/{id}', 'show')->name('genres.show');
+    Route::patch('/genres/{id}', 'update')->name('genres.update');
+    Route::delete('/genres/{id}', 'destroy')->name('genres.destroy');
+});
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/roles', 'index')->name('roles.index');
+    Route::post('/roles', 'store')->name('roles.store');
+    Route::get('/roles/{id}', 'show')->name('roles.show');
+    Route::patch('/roles/{id}', 'update')->name('roles.update');
+    Route::delete('/roles/{id}', 'destroy')->name('roles.destroy');
+});
+
+Route::controller(CopyStatusController::class)->group(function () {
+    Route::get('/copystatuses', 'index')->name('copystatuses.index');
+    Route::post('/copystatuses', 'store')->name('copystatuses.store');
+    Route::get('/copystatuses/{id}', 'show')->name('copystatuses.show');
+    Route::patch('/copystatuses/{id}', 'update')->name('copystatuses.update');
+    Route::delete('/copystatuses/{id}', 'destroy')->name('copystatuses.destroy');
+});
+
+
+Route::controller(CopyStatusController::class)->group(function () {
+    Route::get('/records', 'index')->name('records.index');
+    Route::post('/records', 'store')->name('records.store');
+    Route::get('/records/{id}', 'show')->name('records.show');
+    Route::patch('/records/{id}', 'update')->name('records.update');
+    Route::delete('/records/{id}', 'destroy')->name('records.destroy');
+});
+
 
 Route::post('/records/asociate', [RecordController::class, 'asociate']);
 
