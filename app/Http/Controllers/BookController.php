@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Author;
 use App\Models\Book;
+use App\Http\Resources\BookResource;
+use App\Services\BookService;
 
 
 use Illuminate\Http\Request;
@@ -10,38 +11,21 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
 
+    protected $bookService;
+
+    public function __construct(BookService $bookService)
+    {
+        $this->bookService = $bookService;
+    }
+
     public function index(Request $request)
     {
         $genre = $request->input('genre');
         $author = $request->input('author');
 
-        $query = Book::query();
+        $books = $this->bookService->getBooksByGenreAndAuthor($genre, $author);
 
-        if ($genre) {
-            $query->whereHas('genres', function ($subquery) use ($genre) {
-                $subquery->where('name', $genre);
-            });
-        }
-
-        if ($author) {
-            $query->whereHas('author', function ($subquery) use ($author) {
-                $subquery->where('name', $author);
-            });
-        }
-
-        $books = $query->with(['genres' => function ($query) {
-            $query->select('genres.id', 'genres.name');
-        }])
-        ->addSelect(['id', 'name', 'description', 'edition_year'])
-        ->addSelect(['author' => Author::select('name')
-            ->whereColumn('authors.id', 'books.author_id')])
-        ->get();
-        
-        $books->each(function ($book) {
-            $book->setRelation('genres', $book->genres->pluck('name'));
-        });
-
-        return response()->json($books);
+        return BookResource::collection($books);
     }
 
     public function store(Request $request)

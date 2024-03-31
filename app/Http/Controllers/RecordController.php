@@ -2,80 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Copy;
-use App\Models\Record;
-use App\Models\Role;
-use App\Models\User;
+use App\Services\RecordService;
+use App\Http\Resources\RecordResource;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
 {
+    protected $recordService;
+
+    public function __construct(RecordService $recordService)
+    {
+        $this->recordService = $recordService;
+    }
+
     public function index()
     {
-        $records = Record::with('copies')->get();
-        return response()->json($records);
-    }
-
-    public function asociate(Request $request)
-    {
-        $request->validate([
-            'record_id' => 'required|exists:records,id',
-            'copy_id' => 'required|exists:copies,id',
-        ]);
-    
-        $record = Record::findOrFail($request->record_id);
-        $copy = Copy::findOrFail($request->copy_id);
-        
-        if ($copy->status_id == 1) {
-            $record->copies()->attach($request->copy_id);
-    
-            $copy->status_id = 2; 
-            $copy->save();
-
-            $pivotInfo = $record->copies()->where('copies.id', $request->copy_id)->first()->pivot;
-            
-            return response()->json($pivotInfo, 201);
-        } else {
-            return response()->json(['message' => 'La copia ya está reservada y no se puede asociar a este registro.'], 409);
-        }
-    }
-
-    public function store(Request $request)
-    {
-        $record = Record::create($request->all());
-        return response()->json($record, 201);
+        $records = $this->recordService->getRecordsWithCopies();
+        return RecordResource::collection($records);
     }
 
     public function show($id)
     {
-        $record = Record::findOrFail($id);
-        return response()->json($record);
+        $record = $this->recordService->getRecordWithCopiesById($id);
+        return new RecordResource($record);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'copy_ids' => 'required|array|min:1',
+            'copy_ids.*' => 'exists:copies,id',
+        ]);
+
+        try {
+            $result = $this->recordService->createRecordWithCopies($request->except('copy_ids'), $request->copy_ids);
+
+            return (new RecordResource($result['record']))
+                ->additional(['successful_copies' => $result['successful_copies'], 'failed_copies' => $result['failed_copies']])
+                ->response()
+                ->setStatusCode(201);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], $e->getCode() ?? 400);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'copy_ids' => 'sometimes|required|array|min:1',
+            'copy_ids.*' => 'exists:copies,id',
+        ]);
 
-        $record = Record::findOrFail($id);
-        $record->update($request->all());
-        return response()->json($record);
+        $recordData = $request->except('copy_ids');
+
+        try {
+            $copyIds = $request->has('copy_ids') ? $request->copy_ids : null;
+            $record = $this->recordService->updateRecordWithCopies($id, $recordData, $copyIds);
+
+            return new RecordResource($record);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     public function destroy($id)
     {
-        $record = Record::findOrFail($id);
-
-        $copies = $record->copies;
-
-        foreach ($copies as $copy) {
-            $copy->status_id = 1;
-            $copy->save();
+        try {
+            $this->recordService->deleteRecordWithCopies($id);
+            return response()->json(['message' => 'Record eliminado con éxito.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
         }
-
-        $record->copies()->detach();
-
-        $record->delete();
-
-        return response()->json(['message' => 'Record eliminado con éxito.']);
     }
-
 }
