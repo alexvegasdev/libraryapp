@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use App\Services\RecordService;
 use App\Http\Resources\RecordResource;
 use Illuminate\Http\Request;
@@ -27,6 +27,7 @@ class RecordController extends Controller
         return new RecordResource($record);
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
@@ -47,6 +48,7 @@ class RecordController extends Controller
         }
     }
 
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -65,6 +67,8 @@ class RecordController extends Controller
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
+
+
 
     public function destroy($id)
     {

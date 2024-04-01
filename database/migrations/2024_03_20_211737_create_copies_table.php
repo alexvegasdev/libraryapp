@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('book_id')->constrained('books')->onDelete('cascade');
             $table->foreignId('status_id')->constrained('copy_statuses');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

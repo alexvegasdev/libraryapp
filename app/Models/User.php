@@ -2,17 +2,33 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+
+
+class User extends Authenticatable
 {
     use HasFactory;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use Notifiable;
+    use SoftDeletes;
+    use HasApiTokens;
+
+    public function record() : HasMany
+    {
+        return $this->hasMany(Record::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     protected $fillable = [
         'dni',
         'firstname',
@@ -24,13 +40,14 @@ class User extends Model
         'role_id'
     ];
 
-    public function record(){
-        return $this->hasMany(Record::class);
-    }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
 }

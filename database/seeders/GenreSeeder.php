@@ -14,15 +14,13 @@ class GenreSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('genres')->insert([
-            ['name' => 'Poesía'],
-            ['name' => 'Teatro'],
-            ['name' => 'Cuento'],
-            ['name' => 'Comedia'],
-            ['name' => 'Fantasia'],
-            ['name' => 'Tragedia'],
-            ['name' => 'Fábula'],
-            ['name' => 'Historico'],
-        ]);
+        Genre::create(['name' => 'Poesía']);
+        Genre::create(['name' => 'Teatro']);
+        Genre::create(['name' => 'Cuento']);
+        Genre::create(['name' => 'Comedia']);
+        Genre::create(['name' => 'Fantasía']);
+        Genre::create(['name' => 'Tragedia']);
+        Genre::create(['name' => 'Fábula']);
+        Genre::create(['name' => 'Histórico']);
     }
 }

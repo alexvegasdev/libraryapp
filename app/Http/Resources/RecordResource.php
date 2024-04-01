@@ -16,6 +16,8 @@ class RecordResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'loan_date'=>$this->loan_date,
+            'return_date'=>$this->return_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'copies' => $this->copies->map(function ($copy) {

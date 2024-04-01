@@ -22,6 +22,7 @@ return new class extends Migration
             $table->char('address', length:80);
             $table->foreignId('role_id')->constrained('roles');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

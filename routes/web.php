@@ -2,15 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\CopyController;
-use App\Http\Controllers\CopyStatusController;
-use App\Http\Controllers\GenreController;
-use App\Http\Controllers\RecordController;
-use App\Http\Controllers\RoleController;
-use App\Models\Genre;
-use App\Models\Record;
+use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\CopyController;
+use App\Http\Controllers\Api\CopyStatusController;
+use App\Http\Controllers\Api\GenreController;
+use App\Http\Controllers\Api\RecordController;
+use App\Http\Controllers\Api\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +32,14 @@ Route::controller(CopyController::class)->group(function () {
     Route::get('/copies/{id}', 'show')->name('copies.show');
     Route::patch('/copies/{id}', 'update')->name('copies.update');
     Route::delete('/copies/{id}', 'destroy')->name('copies.destroy');
+});
+
+Route::controller(AuthorController::class)->group(function () {
+    Route::get('/authors', 'index')->name('authors.index');
+    Route::post('/authors', 'store')->name('authors.store');
+    Route::get('/authors/{id}', 'show')->name('authors.show');
+    Route::patch('/authors/{id}', 'update')->name('authors.update');
+    Route::delete('/authors/{id}', 'destroy')->name('authors.destroy');
 });
 
 

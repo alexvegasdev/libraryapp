@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('edition_year');
             $table->foreignId('author_id')->constrained('authors')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
