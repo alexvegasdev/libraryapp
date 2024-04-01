@@ -84,27 +84,6 @@ Route::get('/', function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Route::get('/authors', [AuthorController::class, 'index']);
 // Route::post('/authors/create', [AuthorController::class, 'createAuthor']);
 // Route::put('/authors/update/{id}', [AuthorController::class, 'updateAuthor']);
@@ -141,8 +120,6 @@ Route::get('/', function () {
 // });
 
 
-
-/**csrf */
 
 
 
