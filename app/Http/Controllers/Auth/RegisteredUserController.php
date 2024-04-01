@@ -15,9 +15,14 @@ class RegisteredUserController extends Controller
     public function store(RegisteredUserRequest $request)
     {
         $user = User::create([
-            'name' => $request->name,
+            'dni'=>$request->dni,
+            'firstname' => $request->firstname,
+            'lastname'=>$request->lastname,
+            'phone'=>$request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'address'=>$request->address,
+            'role_id'=>$request->role_id
         ]);
 
         return new JsonResponse(

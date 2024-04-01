@@ -13,7 +13,7 @@ class AuthenticatedController extends Controller
 {
     public function store(LoginRequest $request)
     {
-        if (Auth::attempt($request->all())) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['token' => $request->user()->createToken('token')->plainTextToken], Response::HTTP_OK);
         } else {
             return response()->json(['message' => 'Credenciales inválidas.'], Response::HTTP_UNAUTHORIZED);

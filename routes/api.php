@@ -20,9 +20,10 @@ use App\Http\Controllers\Api\BookController;
 //     return $request->user();
 // });
 
-// Route::group([
-//     'middleware' => 'auth:sanctum'
-// ], static function () {
-//     Route::apiResource('books', BookController::class);
-// });
+Route::group([
+    'middleware' => 'auth:sanctum'
+], static function () {
+    Route::apiResource('books', BookController::class);
+});
+
 
