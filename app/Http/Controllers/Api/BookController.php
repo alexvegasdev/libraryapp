@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
 
-    protected $bookService;
-
-    public function __construct(BookService $bookService)
+    public function __construct(private BookService $bookService)
     {
         $this->bookService = $bookService;
     }

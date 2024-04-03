@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
-
+use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\RecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::group([
     'middleware' => 'auth:sanctum'
 ], static function () {
     Route::apiResource('books', BookController::class);
+    Route::apiResource('authors', AuthorController::class);
+    Route::apiResource('records', RecordController::class);
 });
 
 
