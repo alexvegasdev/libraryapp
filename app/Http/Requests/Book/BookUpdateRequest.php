@@ -22,21 +22,10 @@ class BookUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:255',
-            'description'=>'required|string|max:255',
-            'edition_year'=>'required|integer|digits:4|min:1900|max:' . date('Y'),
-            'author_id'=>'required|exists:authors,id'
-        ];
-
-        if ($this->isMethod('patch')) {
-            $rules = [
                 'name' => 'sometimes|string|max:255',
                 'description' => 'sometimes|string|max:255',
                 'edition_year' => 'sometimes|integer|digits:4|min:1900|max:' . date('Y'),
                 'author_id' => 'sometimes|exists:authors,id',
-            ];
-        }
-
-        return $rules;
+        ];
     }
 }

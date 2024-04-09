@@ -22,21 +22,11 @@ class RecordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loan_date'=>'required|date',
-            'return_date'=>'required|date',
-            'user_id'=>'required|integer|exists:',
-            'copy_ids' =>'required|array|min:1',
-            'copy_ids.*' =>'required|exists:copies,id',
-        ];
-
-        if($this->isMethod('patch')){
-            $rules = [
-                'loan_date'=>'sometimes|date',
+            'loan_date'=>'sometimes|date',
                 'return_date'=>'sometimes|date',
                 'user_id'=>'sometimes|integer',
                 'copy_ids' =>'sometimes|array|min:1',
                 'copy_ids.*' =>'sometimes|exists:copies,id'
-            ];
-        }
+        ];
     }
 }

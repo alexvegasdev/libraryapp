@@ -25,7 +25,9 @@ class BookStoreRequest extends FormRequest
             'name'=>'required|string|max:255',
             'description'=>'required|string|max:255',
             'edition_year'=>'required|integer|digits:4|min:1900|max:' . date('Y'),
-            'author_id'=>'required|exits:authors,id'
+            'author_id'=>'required|exists:authors,id',
+            'genre_ids' => 'required|array|min:1',
+            'genre_ids.*' => 'exists:genres,id'
         ];
     }
 }

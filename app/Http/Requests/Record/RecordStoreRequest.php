@@ -22,8 +22,8 @@ class RecordStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loan_date'=>'required|date',
-            'return_date'=>'required|date',
+            'loan_date'=>'required',
+            'return_date'=>'required',
             'user_id'=>'required|integer|exists:users,id',
             'copy_ids' => 'required|array|min:1',
             'copy_ids.*' => 'exists:copies,id',
