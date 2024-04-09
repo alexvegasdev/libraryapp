@@ -57,7 +57,7 @@ class RecordService
 
       public function updateRecordWithCopies($id, $recordData, $copyIds = null)
       {
-            $record = Record::findOrFail($id);
+            $record = Record::findOrFail($id);-
             $record->update($recordData);
 
             if (!is_null($copyIds)) {

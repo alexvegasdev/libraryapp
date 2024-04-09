@@ -5,8 +5,6 @@ namespace App\Services;
 
 use App\Models\Book;
 use App\Models\Genre;
-use App\Models\Author;
-
 
 class BookService
 {
@@ -29,5 +27,28 @@ class BookService
             return $query->get();
       }
 
+      public function getBookById($id)
+      {
+            return Book::with(['genres','author'])->findOrFail($id);
+      }
 
+      public function createBookWithGenres($bookData, $genreIds)
+      {
+            $book = Book::create($bookData);
+            $book->genres()->sync($genreIds);
+            return $book;
+
+      }
+
+      public function updateBookWithGenres($id, $bookData, $genreIds = null)
+      {
+            $book = Book::findOrFail($id);
+            $book->update($bookData);
+
+            if (!is_null($genreIds)) {
+                  $book->genres()->sync($genreIds);
+            }
+
+            return $book->load(['genres', 'author']);
+      }
 }
