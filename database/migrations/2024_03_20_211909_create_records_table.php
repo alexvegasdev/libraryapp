@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->date('loan_date');
-            $table->date('return_date');
+            $table->timestamp('loan_date');
+            $table->timestamp('return_date');
             $table->timestamps();
             $table->softDeletes();
         });
