@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\CopyController;
 use App\Http\Controllers\Api\RecordController;
 
 /*
@@ -27,6 +28,7 @@ Route::group([
     Route::apiResource('books', BookController::class);
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('records', RecordController::class);
+    Route::apiResource('copies', CopyController::class);
 });
 
 
