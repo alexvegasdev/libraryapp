@@ -14,13 +14,22 @@ class GenreSeeder extends Seeder
      */
     public function run(): void
     {
-        Genre::create(['name' => 'Poesía']);
-        Genre::create(['name' => 'Teatro']);
-        Genre::create(['name' => 'Cuento']);
-        Genre::create(['name' => 'Comedia']);
-        Genre::create(['name' => 'Fantasía']);
-        Genre::create(['name' => 'Tragedia']);
-        Genre::create(['name' => 'Fábula']);
-        Genre::create(['name' => 'Histórico']);
+        $genres = [
+            ['name' => 'Poesía'],
+            ['name' => 'Teatro'],
+            ['name' => 'Cuento'],
+            ['name' => 'Comedia'],
+            ['name' => 'Fantasía'],
+            ['name' => 'Tragedia'],
+            ['name' => 'Fábula'],
+            ['name' => 'Histórico']
+
+        ];
+
+        foreach($genres as $genre){
+            Genre::create([
+                'name' =>$genre['name'],
+            ]);
+        }
     }
 }
