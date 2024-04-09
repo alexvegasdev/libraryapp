@@ -13,6 +13,12 @@ class AuthorController extends Controller
         return response()->json($authors);
     }
 
+    public function show($id)
+    {
+        $author = Author::findOrFail($id);
+        return response()->json($author);
+    }
+
     public function create(Request $request)
     {
         $author = Author::create($request->all());
@@ -26,5 +32,15 @@ class AuthorController extends Controller
         return response()->json($author);
     }
 
+    public function destroy($id)
+    {
+        $author = Author::findOrFail($id);
+        $author->delete();
+        return response()->json(null, 204);
+    }
 
+           
+
+
+    
 }

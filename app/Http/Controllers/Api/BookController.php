@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Book\BookSearchRequest;
+use App\Http\Requests\Book\BookStoreRequest;
+use App\Http\Requests\Book\BookUpdateRequest;
+use App\Http\Resources\BookCollection;
 use App\Models\Book;
 use App\Http\Resources\BookResource;
 use App\Services\BookService;
 
-
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -16,41 +18,47 @@ class BookController extends Controller
         $this->bookService = $bookService;
     }
 
-    public function index(Request $request)
+    public function index(BookSearchRequest $request)
     {
         $genre = $request->input('genre');
         $author = $request->input('author');
 
         $books = $this->bookService->getBooksByGenreAndAuthor($genre, $author);
 
-        return BookResource::collection($books);
+        return new BookCollection($books);
     }
 
-    public function store(Request $request)
+    public function store(BookStoreRequest $request)
     {
-
-        $book = Book::create($request->all());
-        return response()->json($book, 201);
+        $book = $this->bookService->createBookWithGenres($request->except('genre_ids'), $request->genre_ids);
+        return new BookResource($book);
     }
 
     public function show($id)
     {
-        $book = Book::findOrFail($id);
-        return response()->json($book);
+        $book = $this->bookService->getBookById($id);
+        return new BookResource($book);
     }
 
-    public function update(Request $request, $id)
+        
+    public function update(BookUpdateRequest $request, $id)
     {
+        $bookData = $request->except('genre_ids');
 
-        $book = Book::findOrFail($id);
-        $book->update($request->all());
-        return response()->json($book);
+        try {
+            $genreIds = $request->has('genre_ids') ? $request->genre_ids : null;
+            $book = $this->bookService->updateBookWithGenres($id, $bookData, $genreIds);
+
+            return new BookResource($book);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
         $book->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Book eliminado con éxito.'], 200);
     }
 }

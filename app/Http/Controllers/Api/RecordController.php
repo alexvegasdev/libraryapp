@@ -6,6 +6,7 @@ use App\Services\RecordService;
 use App\Http\Resources\RecordResource;
 use App\Http\Requests\Record\RecordStoreRequest;
 use App\Http\Requests\Record\RecordUpdateRequest;
+use App\Http\Resources\RecordCollection;
 
 class RecordController extends Controller
 {
@@ -18,7 +19,7 @@ class RecordController extends Controller
     public function index()
     {
         $records = $this->recordService->getRecordsWithCopies();
-        return RecordResource::collection($records);
+        return new RecordCollection($records);
     }
 
     public function show($id)
@@ -38,7 +39,7 @@ class RecordController extends Controller
                 ->response()
                 ->setStatusCode(201);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], $e->getCode() ?? 400);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
