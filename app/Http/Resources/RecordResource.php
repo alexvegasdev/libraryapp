@@ -13,6 +13,7 @@ class RecordResource extends JsonResource
      */
     public function toArray($request): array
     {
+        
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -23,10 +24,11 @@ class RecordResource extends JsonResource
             'copies' => $this->copies->map(function ($copy) {
                 return [
                     'id' => $copy->id,
-                    'book' => $copy->book->name,
-                    'author' => $copy->book->author->name,
+                    'book' => $copy->book?->name,
+                    'author' => $copy->book?->author?->name,
                 ];
             }),
+            
         ];
     }
 }
