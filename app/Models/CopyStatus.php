@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CopyStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,8 +20,19 @@ class CopyStatus extends Model
         'name'
     ];
 
+    protected $casts = [
+		'name' => CopyStatusEnum::class,
+	];
+
     public function copies()
     {
         return $this->hasMany(Copy::class);
     }
+
+    public static function getIdByName($name)
+    {
+        return static::where('name', $name)->value('id');
+    }
+
+    
 }

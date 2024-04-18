@@ -3,6 +3,7 @@
 namespace App\Models;
 namespace App\Services;
 
+use App\Enums\CopyStatusEnum;
 use App\Models\Copy;
 use App\Models\Record;
 
@@ -54,6 +55,46 @@ class RecordService
 
             return ['record' => $record, 'successful_copies' => $successfulCopies, 'failed_copies' => $failedCopies];
       }
+
+
+      // public function createRecordWithCopies($recordData, $copyIds)
+      // {
+      //       $canBeAssociated = false;
+      //       foreach ($copyIds as $copyId) {
+      //             $copy = Copy::find($copyId);
+      //             if ($copy && $copy->status_id == CopyStatusEnum::AVAILABLE->value) {
+      //                   $canBeAssociated = true;
+      //                   break;
+      //             }
+      //       }
+
+      //       if (!$canBeAssociated) {
+      //             throw new \Exception('Ninguna de las copias puede ser asociada al registro. Todas están reservadas.', 409);
+      //       }
+
+      //             $record = Record::create($recordData);
+      //             $successfulCopies = [];
+      //             $failedCopies = [];
+
+      //       foreach ($copyIds as $copyId) {
+      //             $copy = Copy::findOrFail($copyId);
+      //             if ($copy->status_id == CopyStatusEnum::AVAILABLE->value) {
+      //                   $record->copies()->attach($copyId);
+      //                   $copy->status_id = CopyStatusEnum::RESERVED->value;
+      //                   $copy->save();
+
+      //                   $pivotInfo = $record->copies()->where('copies.id', $copyId)->first()->pivot;
+      //                   array_push($successfulCopies, $pivotInfo);
+      //             } else {
+      //                   array_push($failedCopies, ['copy_id' => $copyId, 'message' => 'La copia ya está reservada y no se puede asociar a este registro.']);
+      //             }
+      //       }
+
+      //       return ['record' => $record, 'successful_copies' => $successfulCopies, 'failed_copies' => $failedCopies];
+      // }
+
+
+      
 
       public function updateRecordWithCopies($id, $recordData, $copyIds = null)
       {

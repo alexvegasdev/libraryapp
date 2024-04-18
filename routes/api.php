@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\CopyController;
+use App\Http\Controllers\Api\CopyStatusController;
+use App\Http\Controllers\Api\GenreController;
 use App\Http\Controllers\Api\RecordController;
+use App\Models\CopyStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +32,8 @@ Route::group([
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('records', RecordController::class);
     Route::apiResource('copies', CopyController::class);
+    Route::apiResource('genres', GenreController::class);
+    Route::apiResource('copystatuses', CopyStatusController::class);
 });
 
 

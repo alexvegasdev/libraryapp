@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\CopyStatusEnum;
 use App\Models\CopyStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,7 +16,9 @@ class CopyStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        CopyStatus::create(['name' => 'Disponible']);
-        CopyStatus::create(['name' => 'Reservado']);
+        foreach(CopyStatusEnum::cases() as $status)
+        {
+            CopyStatus::create(['name' => $status]);
+        }
     }
 }

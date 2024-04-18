@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email', length:80);
             $table->string('password', length:250);
             $table->char('address', length:80);
-            $table->foreignId('role_id')->constrained('roles');
+            //$table->foreignId('role_id')->constrained('roles');
             $table->timestamps();
             $table->softDeletes();
         });

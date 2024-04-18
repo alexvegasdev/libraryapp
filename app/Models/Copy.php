@@ -35,4 +35,9 @@ class Copy extends Model
         return $this->belongsToMany(Record::class);
     }
 
+    public function scopeWhereStatus($query, $statusName)
+    {
+        return $query->where('status_id', CopyStatus::getIdByName($statusName));
+    }
+
 }
