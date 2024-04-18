@@ -16,6 +16,11 @@ class BookController extends Controller
     public function __construct(private BookService $bookService)
     {
         $this->bookService = $bookService;
+        $this->middleware('can:books.store')->only('store');
+        $this->middleware('can:books.update')->only('update');
+        $this->middleware('can:books.destroy')->only('destroy');
+        $this->middleware('can:books.index')->only('index');
+        $this->middleware('can:books.show')->only('show');
     }
 
     public function index(BookSearchRequest $request)
@@ -32,6 +37,18 @@ class BookController extends Controller
     {
         $book = $this->bookService->createBookWithGenres($request->except('genre_ids'), $request->genre_ids);
         return new BookResource($book);
+
+        // return Book::updateOrCreate(
+        //     [
+        //         'name' => $request->name,
+        //         'author_id'=>$request->author_id,
+        //     ],
+        //     [
+        //         'description' => $request->description,
+        //         'edition_year'=>$request->edition_year,
+        //         'author_id'=>$request->author_id
+        //     ]
+        // );
     }
 
     public function show($id)

@@ -14,6 +14,11 @@ class RecordController extends Controller
     public function __construct(private RecordService $recordService)
     {
         $this->recordService = $recordService;
+        $this->middleware('can:records.index')->only('index');
+        $this->middleware('can:records.show')->only('show');
+        $this->middleware('can:records.store')->only('store');
+        $this->middleware('can:records.update')->only('update');
+        $this->middleware('can:records.destroy')->only('destroy');
     }
 
     public function index()

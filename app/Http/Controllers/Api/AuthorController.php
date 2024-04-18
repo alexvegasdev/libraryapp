@@ -6,7 +6,17 @@ use App\Models\Author;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
-{
+{    
+    public function __construct()
+    {
+        $this->middleware('can:authors.store')->only('store');
+        $this->middleware('can:authors.update')->only('update');
+        $this->middleware('can:authors.destroy')->only('destroy');
+        $this->middleware('can:authors.show')->only('update');
+        $this->middleware('can:authors.index')->only('destroy');
+    }
+
+
     public function index()
     {
         $authors = Author::all();
@@ -19,10 +29,20 @@ class AuthorController extends Controller
         return response()->json($author);
     }
 
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $author = Author::create($request->all());
-        return response()->json($author, 201);
+        // return Author::firstOrCreate(
+        //     ['name' => $request->name],
+        //     ['name' => $request->name]
+        // );
+
+        $author =  Author::firstOrNew(
+            ['name' => $request->name],
+            ['name' => $request->name]
+        );
+
+        $author->save();
+        return $author;
     }
 
     public function update(Request $request, $id)
@@ -38,9 +58,4 @@ class AuthorController extends Controller
         $author->delete();
         return response()->json(null, 204);
     }
-
-           
-
-
-    
 }

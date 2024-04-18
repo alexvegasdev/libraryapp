@@ -12,12 +12,17 @@ class CopyStatusController extends Controller
     {
         $copystatuses = CopyStatus::all();
         return response()->json($copystatuses);
+        $this->middleware('can:copy.store')->only('store');
+        $this->middleware('can:copy.update')->only('update');
+        $this->middleware('can:copy.destroy')->only('destroy');
+        $this->middleware('can:copy.index')->only('index');
+        $this->middleware('can:copy.show')->only('show');
     }
 
 
     public function store(Request $request)
-      {
+    {
             $copystatus =  CopyStatus::create($request->all());
             return response()->json($copystatus, 201);
-      }
+    }
 }

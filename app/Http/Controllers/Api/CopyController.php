@@ -1,20 +1,31 @@
 <?php
 namespace App\Http\Controllers\Api;
+
+use App\Enums\CopyStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Copy;
+use App\Models\CopyStatus;
 use Illuminate\Http\Request;
 
 class CopyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:copy.store')->only('store');
+        $this->middleware('can:copy.update')->only('update');
+        $this->middleware('can:copy.destroy')->only('destroy');
+        $this->middleware('can:copy.index')->only('index');
+        $this->middleware('can:copy.show')->only('show');
+    }
+
+
     public function index()
     {
-        $copies= Copy::all();
-        return response()->json($copies);
+        return Copy::whereStatus(CopyStatusEnum::AVAILABLE)->get();
     }
 
     public function store(Request $request)
     {
-
         $copy = Copy::create($request->all());
         return response()->json($copy, 201);
     }
