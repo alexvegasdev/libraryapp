@@ -11,21 +11,27 @@ class UserSeeder extends Seeder
 {
     public function createUsers(array $users, $role)
     {
-        foreach ($users as $user){
-            $userModel = new User();
+        // foreach ($users as $user){
+        //     $userModel = new User();
 
-            $userModel->dni = $user['dni'];
-            $userModel->firstname = $user['firstname'];
-            $userModel->lastname = $user['lastname'];
-            $userModel->email = $user['email'];
-            $userModel->phone = $user['phone'];
-            $userModel->password = Hash::make($user['password']);
-            $userModel->address = $user['address'];
+        //     $userModel->dni = $user['dni'];
+        //     $userModel->firstname = $user['firstname'];
+        //     $userModel->lastname = $user['lastname'];
+        //     $userModel->email = $user['email'];
+        //     $userModel->phone = $user['phone'];
+        //     $userModel->password = Hash::make($user['password']);
+        //     $userModel->address = $user['address'];
 
-            $userModel->assignRole($role);
+        //     $userModel->assignRole($role);
 
-            $userModel->save();
-        }
+        //     $userModel->save();
+        // }
+
+        User::create([
+            'dni'=>'12345678',
+            
+
+        ]);
     }
 
 

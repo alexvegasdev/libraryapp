@@ -20,3 +20,7 @@ enum GenreEnum: string
       case HISTORICAL   = 'Historical';
       case CHEMISTRY   = 'Chemistry';
 }
+
+
+
+

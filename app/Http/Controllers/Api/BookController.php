@@ -12,7 +12,6 @@ use App\Services\BookService;
 
 class BookController extends Controller
 {
-
     public function __construct(private BookService $bookService)
     {
         $this->bookService = $bookService;
@@ -37,45 +36,27 @@ class BookController extends Controller
     {
         $book = $this->bookService->createBookWithGenres($request->except('genre_ids'), $request->genre_ids);
         return new BookResource($book);
-
-        // return Book::updateOrCreate(
-        //     [
-        //         'name' => $request->name,
-        //         'author_id'=>$request->author_id,
-        //     ],
-        //     [
-        //         'description' => $request->description,
-        //         'edition_year'=>$request->edition_year,
-        //         'author_id'=>$request->author_id
-        //     ]
-        // );
     }
 
-    public function show($id)
+    public function show(Book $book)
     {
-        $book = $this->bookService->getBookById($id);
+        $book = $this->bookService->getBookDetails($book);
         return new BookResource($book);
     }
 
         
-    public function update(BookUpdateRequest $request, $id)
+    public function update(BookUpdateRequest $request, Book $book)
     {
-        $bookData = $request->except('genre_ids');
+        $bookData = $request->validated();
+        $genreIds = $request->has('genre_ids') ? $request->genre_ids : null;
+        $updatedBook = $this->bookService->updateBookWithGenres($book, $bookData, $genreIds);
 
-        try {
-            $genreIds = $request->has('genre_ids') ? $request->genre_ids : null;
-            $book = $this->bookService->updateBookWithGenres($id, $bookData, $genreIds);
-
-            return new BookResource($book);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        return new BookResource($updatedBook);
     }
 
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $book = Book::findOrFail($id);
         $book->delete();
-        return response()->json(['message' => 'Book eliminado con éxito.'], 200);
+        return response()->json(['message' => 'Deleted book.'], 200);
     }
 }

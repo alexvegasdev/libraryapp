@@ -7,7 +7,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -23,11 +22,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Record::class);
     }
-
-    // public function role(): BelongsTo
-    // {
-    //     return $this->belongsTo(Role::class);
-    // }
 
     protected $fillable = [
         'dni',

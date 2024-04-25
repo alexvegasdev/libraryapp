@@ -33,7 +33,6 @@ class RecordController extends Controller
         return new RecordResource($record);
     }
 
-
     public function store(RecordStoreRequest $request)
     {
         try {

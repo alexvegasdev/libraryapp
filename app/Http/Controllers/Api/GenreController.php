@@ -41,4 +41,18 @@ class GenreController extends Controller
                   ]);
             });
       }
+
+      public function update(Request $request, $id)
+      {
+            $genre = Genre::findOrFail($id);
+            $genre->update($request->all());
+            return response()->json($genre);
+      }
+
+      public function destroy($id)
+      {
+            $genre = Genre::findOrFail($id);
+            $genre->delete();
+            return response()->json(["success"=>"Deleted genre"],200);
+      }
 }

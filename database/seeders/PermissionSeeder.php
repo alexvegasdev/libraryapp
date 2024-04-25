@@ -45,9 +45,13 @@ class PermissionSeeder extends Seeder
             Permission::create(['name'=>'copy.store'])->syncRoles('Admin');
             Permission::create(['name'=>'copy.update'])->syncRoles('Admin');
             Permission::create(['name'=>'copy.destroy'])->syncRoles('Admin');
-            
+
             Permission::create(['name'=>'record.store'])->syncRoles('Admin');
             Permission::create(['name'=>'record.update'])->syncRoles('Admin');
             Permission::create(['name'=>'record.destroy'])->syncRoles('Admin');
+
+            Permission::create(['name'=>'bookphotos.store'])->syncRoles('Admin');
+            Permission::create(['name'=>'bookphotos.update'])->syncRoles('Admin');
+            Permission::create(['name'=>'bookphotos.destroy'])->syncRoles('Admin');          
       }
 }

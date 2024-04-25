@@ -34,5 +34,4 @@ class CopyStatus extends Model
         return static::where('name', $name)->value('id');
     }
 
-    
 }

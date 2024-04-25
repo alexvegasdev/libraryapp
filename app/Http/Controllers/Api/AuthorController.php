@@ -16,16 +16,14 @@ class AuthorController extends Controller
         $this->middleware('can:authors.index')->only('destroy');
     }
 
-
     public function index()
     {
         $authors = Author::all();
         return response()->json($authors);
     }
 
-    public function show($id)
+    public function show(Author $author)
     {
-        $author = Author::findOrFail($id);
         return response()->json($author);
     }
 
@@ -45,17 +43,15 @@ class AuthorController extends Controller
         return $author;
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Author $author)
     {
-        $author = Author::find($id);
         $author->update($request->all());
         return response()->json($author);
     }
 
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        $author = Author::findOrFail($id);
         $author->delete();
-        return response()->json(null, 204);
+        return response()->json(["message" => "Deleted author."], 204);
     }
 }
