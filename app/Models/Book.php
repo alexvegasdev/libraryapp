@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,22 +25,37 @@ class Book extends Model
         'author_id'
     ];
 
-    // Relacion de uno a uno
-    public function author(){
+    /**
+     *  Get the author that owns the book.
+     */
+    public function author():BelongsTo      
+    {
         return $this->belongsTo(Author::class);
     }
 
-    // Relacion de muchos a muchos
-    public function genres(){
+    /**
+     * The genres that belong to the book.
+     */
+    public function genres():BelongsToMany
+    {
         return $this->belongsToMany(Genre::class);
     }
 
-    public function copies(){
+    /**
+     * Get the copies for the book.
+     */
+
+    public function copies():HasMany
+    {
         return $this->hasMany(Copy::class);
     }
 
+    /**
+     * Get the photos for the book.
+     */
     public function photos(): HasMany 
     {
         return $this->hasMany(BookPhoto::class);
     }
+
 }

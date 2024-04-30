@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Copy>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecordStatus>
  */
-class CopyFactory extends Factory
+class LoanStatusFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,7 @@ class CopyFactory extends Factory
     public function definition(): array
     {
         return [
-            'book_id' =>Book::all()->random()->id,
-            'status_id'=>1
+            //
         ];
     }
 }

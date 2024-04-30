@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
         ]);
 
-        $user->assignRole('Admin');
+        $user->assignRole('Customer');
 
         return new JsonResponse(
             data: $user,

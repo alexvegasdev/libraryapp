@@ -23,8 +23,14 @@ class DatabaseSeeder extends Seeder
 
         
         $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class,
+            CopyStatusSeeder::class,
+            LoanStatusSeeder::class,
+            GenreSeeder::class,
             AuthorSeeder::class,
             BookSeeder::class,
+            CopySeeder::class,
         ]);
     }
 }

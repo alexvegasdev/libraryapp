@@ -10,8 +10,8 @@ namespace App\Enums;
 
 enum CopyStatusEnum: string
 {
-      case RESERVED     = 'Reserverd';
       case AVAILABLE    = 'Available';
+      case RESERVED     = 'Reserverd';
 }
 
 

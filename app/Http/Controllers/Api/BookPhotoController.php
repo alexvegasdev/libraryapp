@@ -29,5 +29,4 @@ class BookPhotoController extends Controller
             'book_id'=>$request->book_id,
         ]);
     }
-
 }

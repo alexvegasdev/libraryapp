@@ -11,11 +11,11 @@ class CopyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:copy.store')->only('store');
-        $this->middleware('can:copy.update')->only('update');
-        $this->middleware('can:copy.destroy')->only('destroy');
-        $this->middleware('can:copy.index')->only('index');
-        $this->middleware('can:copy.show')->only('show');
+        $this->middleware('can:copies.store')->only('store');
+        $this->middleware('can:copies.update')->only('update');
+        $this->middleware('can:copies.destroy')->only('destroy');
+        $this->middleware('can:copies.index')->only('index');
+        $this->middleware('can:copies.show')->only('show');
     }
 
 

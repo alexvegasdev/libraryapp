@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Book;
+namespace App\Http\Requests\Loan;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookStoreRequest extends FormRequest
+class LoanUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class BookStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:255',
-            'description'=>'required|string|max:255',
-            'edition_year'=>'required|integer|digits:4|min:1400|max:' . date('Y'),
-            'author_id'=>'required|exists:authors,id',
-            'genre_ids' => 'required|array|min:1',
-            'genre_ids.*' => 'exists:genres,id'
+                'status_id'=>'sometimes',
+                'loan_date'=>'sometimes|date',
+                'return_date'=>'sometimes|date',
+                'user_id'=>'sometimes|integer',
+                'copy_ids' =>'sometimes|array|min:1',
+                'copy_ids.*' =>'sometimes|exists:copies,id'
         ];
     }
 }

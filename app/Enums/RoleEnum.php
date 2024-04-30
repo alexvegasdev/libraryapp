@@ -10,7 +10,8 @@ namespace App\Enums;
 
 enum RoleEnum: string
 {
-      case CUSTOMER    = 'Customer';
       case ADMIN    = 'Admin';
       case LIBRARIAN      = 'Librarian';
+      case CUSTOMER    = 'Customer';
+
 }

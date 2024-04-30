@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Record;
+namespace App\Http\Requests\Loan;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecordStoreRequest extends FormRequest
+class LoanStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,6 +22,7 @@ class RecordStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'status_id'=>'required',
             'loan_date'=>'required',
             'return_date'=>'required',
             'user_id'=>'required|integer|exists:users,id',

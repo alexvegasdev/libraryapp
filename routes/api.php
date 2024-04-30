@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\BookPhotoController;
 use App\Http\Controllers\Api\CopyController;
 use App\Http\Controllers\Api\CopyStatusController;
 use App\Http\Controllers\Api\GenreController;
-use App\Http\Controllers\Api\RecordController;
-use App\Models\CopyStatus;
+use App\Http\Controllers\Api\LoanController;
+use App\Http\Controllers\Api\LoanStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +29,15 @@ use App\Models\CopyStatus;
 Route::group([
     'middleware' => 'auth:sanctum'
 ], static function () {
+    Route::get('books/search', [BookController::class, 'showByName'])->name('book.name');
     Route::apiResource('books', BookController::class);
     Route::apiResource('authors', AuthorController::class);
-    Route::apiResource('records', RecordController::class);
+    Route::apiResource('loans', LoanController::class);
     Route::apiResource('copies', CopyController::class);
     Route::apiResource('genres', GenreController::class);
     Route::apiResource('copystatuses', CopyStatusController::class);
+    Route::apiResource('loanstatuses', LoanStatusController::class);
 });
-
 
 Route::group([
     'controller' => BookPhotoController::class,
@@ -45,5 +46,4 @@ Route::group([
     Route::post('book/photo/file', 'storeFile')->name('file.store');
     Route::post('book/photo/base64', 'storeBase64')->name('base64.store');
 });
-
 

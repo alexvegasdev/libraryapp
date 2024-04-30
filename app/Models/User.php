@@ -18,7 +18,10 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasApiTokens;
 
-    public function record() : HasMany
+    /**
+     * Get the records for the user.
+     */
+    public function records() : HasMany
     {
         return $this->hasMany(Record::class);
     }
@@ -29,9 +32,7 @@ class User extends Authenticatable
         'lastname',
         'phone',
         'email',
-        'password',
-        'address',
-        'role_id'
+        'password'
     ];
 
     protected $hidden = [

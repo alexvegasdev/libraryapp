@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use App\Enums\GenreEnum;
+use App\Enums\LoanStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Genre extends Model
+class LoanStatus extends Model
 {
     use SoftDeletes;
     use HasFactory;
@@ -21,14 +22,21 @@ class Genre extends Model
         'name'
     ];
 
+    protected $casts = [
+		'name' => LoanStatusEnum::class,
+	];
 
-    public function books():BelongsToMany
+
+    /**
+     *  Get the loans for the loanstatus.
+     */
+    public function loans():HasMany
     {
-        return $this->belongsToMany(Book::class);
+        return $this->hasMany(Loan::class);
     }
 
     /**
-     * Get id by Name 
+     *  Get id by name
      * @param $name
      */
     public static function getIdByName($name)
@@ -36,7 +44,5 @@ class Genre extends Model
         return static::where('name', $name)->value('id');
     }
 
-    protected $casts = [
-		'name' => GenreEnum::class,
-	];
+    
 }

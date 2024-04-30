@@ -12,6 +12,9 @@ class BookPhoto extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * Get the book that owns the photo
+     */
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);

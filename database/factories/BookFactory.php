@@ -18,10 +18,10 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->name(),
+            'title' => fake()->unique()->sentence(($nbWords = rand(1, 5)),),
             'description'=>fake()->text(),
             'edition_year'=>fake()->year(),
-            'author_id' =>Author::factory()
+            'author_id' =>Author::all()->random()->id
         ];
     }
 }

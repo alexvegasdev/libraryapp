@@ -2,49 +2,49 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
-use App\Models\CopyStatus;
+use App\Models\LoanStatus;
 use Illuminate\Http\Request;
 
 class CopyStatusController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:copy.store')->only('store');
-        $this->middleware('can:copy.update')->only('update');
-        $this->middleware('can:copy.destroy')->only('destroy');
-        $this->middleware('can:copy.index')->only('index');
-        $this->middleware('can:copy.show')->only('show');
+        $this->middleware('can:copystatuses.store')->only('store');
+        $this->middleware('can:copystatuses.update')->only('update');
+        $this->middleware('can:copystatuses.destroy')->only('destroy');
+        $this->middleware('can:copystatuses.index')->only('index');
+        $this->middleware('can:copystatuses.show')->only('show');
     }
 
     public function index()
     {
-        return response()->json(CopyStatus::get());
+        return response()->json(LoanStatus::get());
     }
 
     public function store(Request $request)
     {
-            $copystatus =  CopyStatus::create($request->all());
-            return response()->json($copystatus, 201);
+            $loanStatus =  LoanStatus::create($request->all());
+            return response()->json($loanStatus, 201);
     }
 
     public function update(Request $request, $id)
     {
-        $copystatus = CopyStatus::findOrFail($id);
-        $copystatus->update($request->all());
-        return response()->json($copystatus);
+        $loanStatus = loanStatus::findOrFail($id);
+        $loanStatus->update($request->all());
+        return response()->json($loanStatus);
 
     }
 
     public function show($id)
     {
-        $copystatus = CopyStatus::findOrFail($id);
-        return response()->json($copystatus);
+        $loanStatus = loanStatus::findOrFail($id);
+        return response()->json($loanStatus);
     }
 
     public function destroy($id)
     {
-        $copystatus = CopyStatus::findOrFail($id);
-        $copystatus->delete();
-        return response()->json(["success"=>"Deleted copystatus"]);
+        $loanStatus = loanStatus::findOrFail($id);
+        $loanStatus->delete();
+        return response()->json(["success"=>"Deleted loanstatus"]);
     }
 }

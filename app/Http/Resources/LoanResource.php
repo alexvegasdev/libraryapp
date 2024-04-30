@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RecordResource extends JsonResource
+class LoanResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,10 +21,11 @@ class RecordResource extends JsonResource
             'return_date'=>$this->return_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'status'=>$this->status ? $this->status->name : null,
             'copies' => $this->copies->map(function ($copy) {
                 return [
                     'id' => $copy->id,
-                    'book' => $copy->book?->name,
+                    'book' => $copy->book->title,
                     'author' => $copy->book?->author?->name,
                 ];
             }),

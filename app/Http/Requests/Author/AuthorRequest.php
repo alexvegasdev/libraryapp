@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Record;
+namespace App\Http\Requests\Author;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecordUpdateRequest extends FormRequest
+class AuthorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,7 @@ class RecordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loan_date'=>'sometimes|date',
-                'return_date'=>'sometimes|date',
-                'user_id'=>'sometimes|integer',
-                'copy_ids' =>'sometimes|array|min:1',
-                'copy_ids.*' =>'sometimes|exists:copies,id'
+            'name'=>'required|string|max:255'
         ];
     }
 }

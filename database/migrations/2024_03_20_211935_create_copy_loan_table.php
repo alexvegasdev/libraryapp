@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('copy_loan', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255)->unique();
+            $table->foreignId('copy_id')->constrained('copies');
+            $table->foreignId('loan_id')->constrained('loans');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('copy_loan');
     }
 };
