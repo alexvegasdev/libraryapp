@@ -22,12 +22,11 @@ class LoanUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'status_id'=>'sometimes',
                 'loan_date'=>'sometimes|date',
                 'return_date'=>'sometimes|date',
                 'user_id'=>'sometimes|integer',
-                'copy_ids' =>'sometimes|array|min:1',
-                'copy_ids.*' =>'sometimes|exists:copies,id'
+                'status_id'=>'sometimes|integer',
+                // 'copy_ids' =>'sometimes|array|min:1'
         ];
     }
 }
