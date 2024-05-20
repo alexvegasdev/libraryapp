@@ -74,7 +74,7 @@ class BookController extends Controller
      * 
      * @param BookUpdateRequest $request The request containing update data.
      * @param Book $book The book model to update.
-     * @return BookResource Returns a resource with the updated book details.
+     * @return BookResource Returns a resource with the updated book details
      */
     public function update(BookUpdateRequest $request, Book $book)
     {

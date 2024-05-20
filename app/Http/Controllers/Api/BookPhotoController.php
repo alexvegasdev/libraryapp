@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\BookPhoto;
 use App\Traits\Base64Decodable;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookPhotoController extends Controller
 {
@@ -29,4 +31,21 @@ class BookPhotoController extends Controller
             'book_id'=>$request->book_id,
         ]);
     }
+
+    public function updatePhoto(Request $request, BookPhoto $bookPhoto)
+    {
+        if (!$request->hasFile('photo')) {
+            return response()->json(['error' => 'No photo uploaded'], 400);
+        }
+
+        if (!is_null($bookPhoto->uri) && Storage::disk('images')->exists($bookPhoto->uri)) {
+            Storage::disk('images')->delete($bookPhoto->uri);
+        }
+
+        $newUri = $request->file('photo')->store('books', 'images');
+        $bookPhoto->update(['uri' => $newUri]);
+    
+        return response()->json(['success'=>'Image updated']);
+    }
+
 }
