@@ -29,7 +29,8 @@ use App\Http\Controllers\Api\LoanStatusController;
 Route::group([
     'middleware' => 'auth:sanctum'
 ], static function () {
-    Route::get('books/search', [BookController::class, 'showByName'])->name('book.name');
+    Route::get('books/search', [BookController::class, 'showByTitle'])->name('book.name');
+    Route::get('/books/by-date/{date}', [BookController::class, 'getBooksByDate'])->name('book.date');
     Route::apiResource('books', BookController::class);
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('loans', LoanController::class);
@@ -44,6 +45,7 @@ Route::group([
     'as' => 'books.photo.',
 ], static function () {
     Route::post('book/photo/file', 'storeFile')->name('file.store');
+    Route::post('book/photo/update/{book}', 'updatePhoto')->name('update');
     Route::post('book/photo/base64', 'storeBase64')->name('base64.store');
 });
 
