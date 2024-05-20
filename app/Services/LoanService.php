@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\LoanStatusEnum;
 use App\Models\Loan;
 
 class LoanService
@@ -52,11 +53,16 @@ class LoanService
        */
       public function updateLoanWithCopies(Loan $loan, array $loanData, array $copyIds = null)
       {
+            if ($loan->status != LoanStatusEnum::ACTIVE) {
+                  throw new \Exception("This Loan is already completed");
+            }
+
             $loan->update($loanData);
             if ($copyIds !== null) {
                   $loan->copies()->sync($copyIds);
             }
-            return $loan->load(['copies']);
+            return $loan;
+
       }
 
       /**
@@ -67,6 +73,6 @@ class LoanService
       public function deleteLoanWithCopies(Loan $loan)
       {
             $loan->copies()->detach();
-            $loan->delete();
+            $loan->forceDelete();
       }
 }
