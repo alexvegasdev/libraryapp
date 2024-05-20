@@ -55,8 +55,25 @@ class BookService
 
       public function createBookWithGenres(array $bookData, array $genreIds) 
       {
-            $book = Book::create($bookData);
+            // $book = Book::create($bookData);
+            // $book->genres()->sync($genreIds);
+            // return $book;
+
+            $book = Book::withTrashed()
+            ->where('title', $bookData['title'])
+            ->first();
+
+            if ($book && $book->trashed()) {
+                  $book->restore();
+                  $book->update($bookData);
+            } else if (!$book) {
+                  $book = Book::create($bookData);
+            } else {
+                  $book->update($bookData);
+            }
+
             $book->genres()->sync($genreIds);
+
             return $book;
       }
 
@@ -102,5 +119,24 @@ class BookService
       public function findByTitle(string $title)
       {
             return Book::where('title', $title )->firstOrFail();
+      }
+
+      /**
+       * 
+       * Get Books by Date
+       * @param string $date
+       * 
+       */
+
+      public function getBooksByDate(string $date)
+      {
+            try {
+                  $date = new \DateTime($date);
+            } catch (\Exception $e) {
+                  return response()->json(['error' => 'Formato de fecha inválido.'], 400);
+            }
+
+            return Book::where('created_at', '>=', $date->format('Y-m-d'))->get();
+
       }
 }

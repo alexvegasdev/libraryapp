@@ -12,7 +12,6 @@ use App\Models\Book;
 use App\Http\Resources\BookResource;
 use App\Services\BookService;
 
-
 class BookController extends Controller
 {
     /**
@@ -111,9 +110,19 @@ class BookController extends Controller
      */
     public function showByTitle(BookShowRequest $request)
     {
-        $name = $request->query('name');
-        $book = $this->bookService->findByTitle($name);
+        $title = $request->query('title');
+        $book = $this->bookService->findByTitle($title);
         return new BookResource($book);
+    }
+
+    public function getBooksByDate($date)
+    {
+        try {
+            $books = $this->bookService->getBooksByDate($date);
+            return new BookCollection($books);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
     
 }
