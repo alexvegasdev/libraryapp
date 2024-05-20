@@ -50,7 +50,6 @@ class CopyController extends Controller
         $copy->delete();
         return response()->json(null, 204);
     }
-
 }
 
 
