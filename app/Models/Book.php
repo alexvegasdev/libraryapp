@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,10 +20,15 @@ class Book extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'title',
         'description',
         'edition_year',
         'author_id'
+    ];
+
+    protected $casts = [
+        'created_at' => 'date:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d',
     ];
 
     /**
@@ -57,5 +63,6 @@ class Book extends Model
     {
         return $this->hasMany(BookPhoto::class);
     }
+
 
 }
