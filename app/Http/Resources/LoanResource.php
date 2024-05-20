@@ -16,11 +16,9 @@ class LoanResource extends JsonResource
         
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'loan_date'=>$this->loan_date,
-            'return_date'=>$this->return_date,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'user'=>$this->user ? $this->user->firstname : null,
+            'loan_date'=>$this->loan_date->format('Y-m-d'),
+            'return_date'=>$this->return_date->format('Y-m-d'),
             'status'=>$this->status ? $this->status->name : null,
             'copies' => $this->copies->map(function ($copy) {
                 return [
