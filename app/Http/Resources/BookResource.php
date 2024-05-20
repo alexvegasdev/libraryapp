@@ -17,11 +17,12 @@ class BookResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->tite,
+            'title' => $this->title,
             'description' => $this->description,
             'edition_year' => $this->edition_year,
             'author' => $this->author ? $this->author->name : null,
             'genres' => $this->genres->pluck('name')->flatten(),
+            'created_at'=>$this->created_at->format('Y-m-d')
             //'copies_count'=>$this->copies_count ?? 0 
         ];
     }
