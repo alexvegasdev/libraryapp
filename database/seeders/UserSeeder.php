@@ -29,8 +29,6 @@ class UserSeeder extends Seeder
 
         User::create([
             'dni'=>'12345678',
-            
-
         ]);
     }
 

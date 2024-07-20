@@ -19,6 +19,8 @@ enum GenreEnum: string
       case FABLE        = 'Fable';
       case HISTORICAL   = 'Historical';
       case CHEMISTRY   = 'Chemistry';
+      case DRAMA = 'Drama';
+      case ROMANCE = 'Romance';
 }
 
 
